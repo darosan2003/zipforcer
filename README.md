@@ -37,7 +37,7 @@ contains passwords, one at a line.
 ```
 
 #### Example
-![](https://ibb.co/hYs9JMY)
+![zipforcer-cap](https://user-images.githubusercontent.com/67020959/176444844-4249ad0a-e3f4-49b5-98df-d0822b940c21.png)
 
 ---
 
