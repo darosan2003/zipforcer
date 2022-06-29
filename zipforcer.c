@@ -30,11 +30,16 @@ void bruteforce(char *zipfile, char *passlist) {
 
   if((fp = fopen(passlist, "r")) == NULL) {
     fprintf(stderr, "[-] Unable to open passlist\n");
+    close(fd[0]);
+    close(fd[1]);
     exit(2);
   }
 
   if((bin = open(DISCARD, O_WRONLY)) == -1) {
     fprintf(stderr, "[-] Couldn't open /dev/null\n");
+    close(fd[0]);
+    close(fd[1]);
+    fclose(fp);
     exit(3);
   }
 
@@ -42,6 +47,8 @@ void bruteforce(char *zipfile, char *passlist) {
 
     if((pid = fork()) == -1) {
       fprintf(stderr, "[-] Failed to fork process\n");
+      close(fd[0]);
+      close(fd[1]);
       fclose(fp);
       exit(4);
     }
@@ -59,7 +66,6 @@ void bruteforce(char *zipfile, char *passlist) {
       close(fd[0]);
 
       execvp("unzip", args);
-      exit(FAIL);
 
     }else{
 
@@ -98,7 +104,7 @@ void bruteforce(char *zipfile, char *passlist) {
       }else{
         fprintf(stderr, "[-] Command terminated abruptly\n");
         fclose(fp);
-        exit(5);
+        exit(FAIL);
       }
 
       i++;
