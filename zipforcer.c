@@ -49,6 +49,7 @@ void bruteforce(char *zipfile, char *passlist) {
       fprintf(stderr, "[-] Failed to fork process\n");
       close(fd[0]);
       close(fd[1]);
+      close(bin);
       fclose(fp);
       exit(4);
     }
@@ -74,6 +75,7 @@ void bruteforce(char *zipfile, char *passlist) {
       sigaction(SIGINT, &sa, NULL);
 
       close(fd[0]);
+
       char before[MAX];
       int wstat;
 
@@ -82,6 +84,7 @@ void bruteforce(char *zipfile, char *passlist) {
 
       if(fgets(passwd, sizeof(passwd), fp) == NULL) {
         kill(pid, SIGKILL);
+        close(fd[1]);
         break;
       }
 
@@ -99,10 +102,12 @@ void bruteforce(char *zipfile, char *passlist) {
         if(status == 0) {
           printf("\n[+] Password Found [%s]\n", before);
           found = 1;
+          close(fd[1]);
           break;
         }
       }else{
         fprintf(stderr, "[-] Command terminated abruptly\n");
+        close(fd[1]);
         fclose(fp);
         exit(FAIL);
       }
