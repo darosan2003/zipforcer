@@ -20,7 +20,7 @@ void bruteforce(char *zipfile, char *passlist) {
   FILE *fp;
   char passwd[MAX];
   int fd[2]; int i = 1;
-  int bin, found, delay;
+  int bin, delay; int found = 0;
   pid_t pid;
 
   if(pipe(fd) == -1) {
