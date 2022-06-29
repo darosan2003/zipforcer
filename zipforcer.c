@@ -20,7 +20,7 @@ void bruteforce(char *zipfile, char *passlist) {
   FILE *fp;
   char passwd[MAX];
   int fd[2]; int i = 1;
-  int bin, found;
+  int bin, found, delay;
   pid_t pid;
 
   if(pipe(fd) == -1) {
@@ -68,23 +68,30 @@ void bruteforce(char *zipfile, char *passlist) {
       sigaction(SIGINT, &sa, NULL);
 
       close(fd[0]);
+      char before[MAX];
       int wstat;
+
+      if(delay)
+        strncpy(before, passwd, sizeof(before));
 
       if(fgets(passwd, sizeof(passwd), fp) == NULL) {
         kill(pid, SIGKILL);
         break;
       }
-     
+
       passwd[strlen(passwd) - 1] = '\0';
       printf("[%d] Trying [%s]...\n", i, passwd);
       write(fd[1], passwd, strlen(passwd));
+
+      if(!delay)
+        delay = 1;
 
       wait(&wstat);
 
       if(WIFEXITED(wstat)) {
         int status = WEXITSTATUS(wstat);
         if(status == 0) {
-          puts("\n[+] Password Found");
+          printf("\n[+] Password Found [%s]\n", before);
           found = 1;
           break;
         }
