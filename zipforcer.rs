@@ -23,8 +23,8 @@ fn bruteforce(zipfile: &String, passlist: &String) {
             .args(["-P", password, zipfile])
             .output()
             .expect("Failed to execute command");
-    
-        if output.status.success() {
+
+        if output.status.success() == true {
             println!("\n[+] Password found: {}", password);
             exit(0);
         }
