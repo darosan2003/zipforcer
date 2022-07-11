@@ -1,6 +1,7 @@
 # zipforcer
 
-![](https://img.shields.io/badge/made%20with-C-blue)
+![](https://img.shields.io/badge/made%20with-C-blue) ![](https://img.shields.io/badge/made%20with-Rust-orange)
+
 
 ### Description
 This program will attempt to open a password protected zip by bruteforcing.
@@ -17,7 +18,7 @@ error message will be shown.
 ### Usage
 What follows is an explanation of how to use this program
 
-#### Compilation
+#### Compilation (C alternative)
 To compile just use Make with the following parameters:
 ```bash
 make all
@@ -26,6 +27,15 @@ It will create a folder containing all the .o files, if you want to delete them 
 ```bash
 make clean
 ```
+
+#### Compilation (Rust alternative)
+To compile run the compile bash script. Don't forget to give it the
+right permissions
+```bash
+./compile
+```
+It will check if you have the rust compiler (rustc) on your system.
+If you do it will compile the file, otherwise it will exit.
 
 ---
 

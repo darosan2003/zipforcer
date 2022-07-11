@@ -1,0 +1,13 @@
+#!/bin/bash
+
+FILE=zipforcer.rs
+compile=$(which rustc)
+
+if [ $? -ne 0 ]; then
+	echo "[-] rustc compiler not found"
+	echo "[!] Exiting..."
+	exit
+fi
+
+$compile $FILE
+echo "[+] Done!"
